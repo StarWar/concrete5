@@ -260,6 +260,9 @@
 					preventRecursiveMoves: true, // Prevent dropping nodes on own descendants,
 					focusOnClick: true,
 					preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+					draggable: {
+					    containment: '.ccm-sitemap-wrapper'
+					},
 
 					dragStart: function(sourceNode, data) {
 						if (my.options.selectMode) {
