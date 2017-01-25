@@ -77,6 +77,28 @@
 					my.getTree().reload(source);
 				});
 				my.$element.find('div.ccm-sitemap-locales-wrapper').append($menu);
+				$menu.find('li').droppable({
+				    addClasses: false,
+				    hoverClass: 'ui-state-highlight',
+                    accept: function($sitemap) {
+                        if (!$sitemap.is(my.$sitemap)) {
+                            return false;
+                        }
+                        var $liLocale = $(this);
+                        if ($liLocale.hasClass('active')) {
+                            return false;
+                        }
+                        if ($liLocale.find('a[data-locale-site-tree]').length === 0) {
+                            return false;
+                        }
+                        return true;
+                    },
+                    over: function(e, ui) {
+                        var sourceNode = ui.helper.data('ftSourceNode'),
+                            $liLocale = $(this);
+                        $liLocale.find('a[data-locale-site-tree]').trigger('click');
+                    }
+				});
 			}
 		},
 
