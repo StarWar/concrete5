@@ -11,8 +11,10 @@ use Concrete\Core\User\Group\GroupList;
 use Hautelook\Phpass\PasswordHash;
 use Concrete\Core\Permission\Access\Entity\Entity as PermissionAccessEntity;
 use Concrete\Core\User\Point\Action\Action as UserPointAction;
+use Doctrine\ORM\EntityManagerInterface;
+use Concrete\Core\Entity\User\User as UserEntity;
 
-class User extends Object
+class User extends Object implements UserInterface
 {
     public $uID = '';
     public $uName = '';
@@ -952,5 +954,33 @@ class User extends Object
     public function logIn($cache_interface = true)
     {
         $this->persist($cache_interface);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see UserInterface::getEntityObject()
+     */
+    public function getEntityObject()
+    {
+        $result = null;
+        $uID = $this->getUserID();
+        if ($uID) {
+            $app = Application::getFacadeApplication();
+            $em = $app->make(EntityManagerInterface::class);
+            $result = $em->find(UserEntity::class, $uID);
+        }
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see UserInterface::getUserObject()
+     */
+    public function getUserObject()
+    {
+        return $this;
     }
 }

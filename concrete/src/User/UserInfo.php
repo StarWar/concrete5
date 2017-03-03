@@ -32,7 +32,7 @@ use Concrete\Core\Workflow\Request\DeleteUserRequest as DeleteUserWorkflowReques
 use Concrete\Core\Attribute\ObjectInterface as AttributeObjectInterface;
 use Concrete\Core\Permission\ObjectInterface as PermissionObjectInterface;
 
-class UserInfo extends Object implements AttributeObjectInterface, PermissionObjectInterface
+class UserInfo extends Object implements AttributeObjectInterface, PermissionObjectInterface, UserInterface
 {
     use ObjectTrait;
 
@@ -867,6 +867,16 @@ class UserInfo extends Object implements AttributeObjectInterface, PermissionObj
         }
 
         return;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see UserInterface::getUserInfoObject()
+     */
+    public function getUserInfoObject()
+    {
+        return $this;
     }
 
     /**

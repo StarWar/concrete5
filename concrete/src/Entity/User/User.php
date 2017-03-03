@@ -2,6 +2,7 @@
 namespace Concrete\Core\Entity\User;
 
 use Doctrine\ORM\Mapping as ORM;
+use Concrete\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     }
  * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer", options={"unsigned": true})
@@ -456,5 +457,27 @@ class User
     public function __toString()
     {
         return (string) $this->getUserID();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see UserInterface::getEntityObject()
+     */
+    public function getEntityObject()
+    {
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see UserInterface::getUserObject()
+     */
+    public function getUserObject()
+    {
+        $uID = $this->getUserID();
+
+        return ($uID === null) ? null : \User::getByUserID($uID);
     }
 }
