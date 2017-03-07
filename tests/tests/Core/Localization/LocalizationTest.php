@@ -34,14 +34,14 @@ class LocalizationTest extends LocalizationTestsBase
     {
         parent::setUpBeforeClass();
         // Move language directories to the application
-        $source = __DIR__ . '/fixtures/languages';
+        $source = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/languages';
         $target = static::getTranslationsFolder();
         $filesystem = new Filesystem();
         $filesystem->copyDirectory($source, $target);
 
         $loader = new MapClassLoader(array(
-            'Concrete\\Tests\\Core\\Localization\\Fixtures\\TestTranslationLoader' => __DIR__ . '/fixtures/TestTranslationLoader.php',
-            'Concrete\\Tests\\Core\\Localization\\Fixtures\\TestUpdatedTranslationLoader' => __DIR__ . '/fixtures/TestUpdatedTranslationLoader.php',
+            'Concrete\\Tests\\Core\\Localization\\Fixtures\\TestTranslationLoader' => str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/TestTranslationLoader.php',
+            'Concrete\\Tests\\Core\\Localization\\Fixtures\\TestUpdatedTranslationLoader' => str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/TestUpdatedTranslationLoader.php',
         ));
         $loader->register();
     }
@@ -433,7 +433,7 @@ class LocalizationTest extends LocalizationTestsBase
     {
         return;
 
-        $siteTranslatorLoaderTestPath = __DIR__ . '/Adapter/Zend/Translation/Loader/Gettext';
+        $siteTranslatorLoaderTestPath = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/Adapter/Zend/Translation/Loader/Gettext';
 
         // Move translation files
         $langDir = $siteTranslatorLoaderTestPath . '/fixtures/languages/site';

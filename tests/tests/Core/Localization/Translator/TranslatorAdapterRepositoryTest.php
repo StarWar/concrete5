@@ -24,9 +24,9 @@ class TranslatorAdapterRepositoryTest extends PHPUnit_Framework_TestCase
     {
         $loader = new MapClassLoader(array(
             'Concrete\\Tests\\Core\\Localization\\Translator\\Fixtures\\DummyTranslatorAdapter'
-                => __DIR__ . '/fixtures/DummyTranslatorAdapter.php',
+                => str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/DummyTranslatorAdapter.php',
             'Concrete\\Tests\\Core\\Localization\\Translator\\Fixtures\\DummyTranslatorAdapterFactory'
-                => __DIR__ . '/fixtures/DummyTranslatorAdapterFactory.php',
+                => str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/DummyTranslatorAdapterFactory.php',
         ));
         $loader->register();
     }

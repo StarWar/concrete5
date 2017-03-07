@@ -15,7 +15,7 @@ abstract class CodingStyleTestCase extends \PHPUnit_Framework_TestCase
     {
         if (self::$phpFiles === null) {
             $files = [];
-            $baseDir = rtrim(str_replace('/', DIRECTORY_SEPARATOR, DIR_BASE_CORE), DIRECTORY_SEPARATOR);
+            $baseDir = rtrim(DIR_BASE_CORE, '/');
             $directoryIterator = new \RecursiveDirectoryIterator($baseDir);
             $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::LEAVES_ONLY);
             foreach ($iterator as $f) {
@@ -27,8 +27,8 @@ abstract class CodingStyleTestCase extends \PHPUnit_Framework_TestCase
                 if ($filename[0] === '.' || strcasecmp(substr($filename, -4), '.php') !== 0) {
                     continue;
                 }
-                $fullPath = $f->getRealPath();
-                $relativePath = str_replace(DIRECTORY_SEPARATOR, '/', substr($fullPath, strlen($baseDir)));
+                $fullPath = str_replace(DIRECTORY_SEPARATOR, '/', $f->getRealPath());
+                $relativePath = substr($fullPath, strlen($baseDir));
                 if (strpos($relativePath, '/.') !== false) {
                     continue;
                 }

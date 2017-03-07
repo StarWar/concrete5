@@ -27,14 +27,14 @@ class ThemeLocation extends AbstractLocation
     {
         if ($this->pkgHandle) {
             return DIR_PACKAGES
-                . DIRECTORY_SEPARATOR
+                . '/'
                 . $this->pkgHandle
-                . DIRECTORY_SEPARATOR
+                . '/'
                 . DIRNAME_THEMES
-                . DIRECTORY_SEPARATOR
+                . '/'
                 . $this->themeHandle;
         } else {
-            return DIR_APPLICATION . DIRECTORY_SEPARATOR . DIRNAME_THEMES . DIRECTORY_SEPARATOR . $this->themeHandle;
+            return DIR_APPLICATION . '/' . DIRNAME_THEMES . '/' . $this->themeHandle;
         }
     }
 
@@ -42,13 +42,13 @@ class ThemeLocation extends AbstractLocation
     {
         if ($this->pkgHandle) {
             return DIR_REL
-            . DIRECTORY_SEPARATOR
+            . '/'
             . $this->pkgHandle
-            . DIRECTORY_SEPARATOR
+            . '/'
             . DIRNAME_THEMES
             . $this->themeHandle;
         } else {
-            return DIR_REL . DIRECTORY_SEPARATOR . DIRNAME_THEMES . DIRECTORY_SEPARATOR . $this->themeHandle;
+            return DIR_REL . '/' . DIRNAME_THEMES . '/' . $this->themeHandle;
         }
     }
 }

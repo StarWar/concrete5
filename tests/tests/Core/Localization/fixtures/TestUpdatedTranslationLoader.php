@@ -19,7 +19,7 @@ class TestUpdatedTranslationLoader extends AbstractTranslationLoader
     public function loadTranslations(TranslatorAdapterInterface $translatorAdapter)
     {
         $translator = $translatorAdapter->getTranslator();
-        $translator->addTranslationFile('phparray', __DIR__ . '/translations_updated.php');
+        $translator->addTranslationFile('phparray', str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/translations_updated.php');
     }
 
 }

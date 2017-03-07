@@ -21,7 +21,7 @@ class UpdateTest extends ConcreteDatabaseTestCase
     public function testCurrentMigration()
     {
         \Concrete\Core\Block\BlockType\BlockType::installBlockType('core_scrapbook_display');
-        $directory = __DIR__ . '/fixtures/';
+        $directory = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/';
         $configuration = new \Concrete\Core\Updater\Migrations\Configuration(false);
         $configuration->setMigrationsDirectory($directory);
         $configuration->registerMigrationsFromDirectory($directory);
@@ -53,7 +53,7 @@ class UpdateTest extends ConcreteDatabaseTestCase
         $sm = $db->getSchemaManager();
         $db->exec('truncate BlockTypes');
 
-        $directory = __DIR__ . '/fixtures/';
+        $directory = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/';
         $configuration = new \Concrete\Core\Updater\Migrations\Configuration(false);
         $configuration->setMigrationsDirectory($directory);
         $configuration->registerMigrationsFromDirectory($directory);

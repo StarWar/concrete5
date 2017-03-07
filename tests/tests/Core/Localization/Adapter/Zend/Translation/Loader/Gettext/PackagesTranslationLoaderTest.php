@@ -72,7 +72,7 @@ class PackagesTranslationLoaderTest extends ConcreteDatabaseTestCase
 
     private static function getTestPackages()
     {
-        $pkgSource = __DIR__ . '/fixtures/packages';
+        $pkgSource = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/packages';
         $packages = array();
 
         $filesystem = new Filesystem();

@@ -21,13 +21,13 @@ class SiteTranslationLoaderTest extends LocalizationTestsBase
     {
         parent::setUpBeforeClass();
         $loader = new MapClassLoader(array(
-            'Concrete\\Tests\\Core\\Localization\\Translator\\Adapter\\Zend\\Translation\\Loader\\Gettext\\Fixtures\\MultilingualDetector' => __DIR__ . '/fixtures/MultilingualDetector.php',
+            'Concrete\\Tests\\Core\\Localization\\Translator\\Adapter\\Zend\\Translation\\Loader\\Gettext\\Fixtures\\MultilingualDetector' => str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/MultilingualDetector.php',
         ));
         $loader->register();
 
         $filesystem = new Filesystem();
 
-        $langDir = __DIR__ . '/fixtures/languages/site';
+        $langDir = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/languages/site';
         $appLangDir = static::getTranslationsFolder() . '/site';
         $filesystem->copyDirectory($langDir, $appLangDir);
     }

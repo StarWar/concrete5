@@ -157,8 +157,8 @@ const DIRNAME_METADATA_XML = 'xml';
 const DIRNAME_METADATA_YAML = 'yaml';
 const REL_DIR_FILES_INCOMING = '/incoming';
 const REL_DIR_FILES_THUMBNAILS = '/thumbnails';
-define('REL_DIR_METADATA_XML', DIRNAME_CONFIG . DIRECTORY_SEPARATOR . DIRNAME_METADATA_XML);
-define('REL_DIR_METADATA_YAML', DIRNAME_CONFIG . DIRECTORY_SEPARATOR . DIRNAME_METADATA_YAML);
+define('REL_DIR_METADATA_XML', DIRNAME_CONFIG . '/' . DIRNAME_METADATA_XML);
+define('REL_DIR_METADATA_YAML', DIRNAME_CONFIG . '/' . DIRNAME_METADATA_YAML);
 
 /*
  * ----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ const FILENAME_STYLE_CUSTOMIZER_DEFAULT_PRESET_NAME = 'defaults.less';
  * Directory constants
  * ----------------------------------------------------------------------------
  */
-define('DIR_BASE_CORE', realpath(dirname(__FILE__) . '/..'));
+define('DIR_BASE_CORE', str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__) . '/..')));
 define('DIR_PACKAGES', DIR_BASE . '/packages');
 define('DIR_FILES_BLOCK_TYPES', DIR_APPLICATION . '/' . DIRNAME_BLOCKS);
 define('DIR_FILES_BLOCK_TYPES_CORE', DIR_BASE_CORE . '/' . DIRNAME_BLOCKS);
@@ -367,7 +367,7 @@ define('FILE_PERMISSIONS_MODE_COMPUTED', $FILE_PERMISSIONS_MODE);
  * We need our include path to be set here for libraries like Zend Framework
  * ----------------------------------------------------------------------------
  */
-ini_set('include_path', DIR_BASE_CORE . DIRECTORY_SEPARATOR . DIRNAME_VENDOR . PATH_SEPARATOR . get_include_path());
+ini_set('include_path', DIR_BASE_CORE . '/' . DIRNAME_VENDOR . PATH_SEPARATOR . get_include_path());
 
 /**
  * ----------------------------------------------------------------------------

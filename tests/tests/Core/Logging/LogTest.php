@@ -58,7 +58,7 @@ class LogTest extends ConcreteDatabaseTestCase
         $r = new stdClass();
         $r->test = 'test';
 
-        $sh = new \Monolog\Handler\StreamHandler(dirname(__FILE__) . '/test.log', Logger::DEBUG, false);
+        $sh = new \Monolog\Handler\StreamHandler(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/test.log', Logger::DEBUG, false);
         Log::pushHandler($sh);
         Log::warning('This is a warning!');
         Log::info('This is an interesting object', array($r));
@@ -75,7 +75,7 @@ class LogTest extends ConcreteDatabaseTestCase
         $this->assertEquals(count($r), 1);
 
         $sh->close();
-        $contents = trim(file_get_contents(dirname(__FILE__) . '/test.log'));
+        $contents = trim(file_get_contents(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/test.log'));
         $entries = explode("\n", $contents);
 
         $this->assertEquals(count($entries), 2);

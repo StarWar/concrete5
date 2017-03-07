@@ -19,7 +19,7 @@ class TranslatorAdapterTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $translationsFile = __DIR__ . '/fixtures/translations.php';
+        $translationsFile = str_replace(DIRECTORY_SEPARATOR, '/', __DIR__) . '/fixtures/translations.php';
 
         $translator = new Translator();
         $translator->addTranslationFile('phparray', $translationsFile);

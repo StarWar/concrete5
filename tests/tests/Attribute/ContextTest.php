@@ -58,7 +58,7 @@ class ContextText extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('composer', $av->controller->getAction());
         // form, because it falls back.
-        $this->assertEquals(str_replace(DIRECTORY_SEPARATOR, '/', DIR_BASE_CORE . '/attributes/text/form.php'), str_replace(DIRECTORY_SEPARATOR, '/', $av->getViewTemplate()));
+        $this->assertEquals(DIR_BASE_CORE . '/attributes/text/form.php', $av->getViewTemplate());
 
     }
 
@@ -76,7 +76,7 @@ class ContextText extends PHPUnit_Framework_TestCase
         ob_end_clean();
 
         $this->assertEquals('form', $av->controller->getAction());
-        $this->assertEquals(str_replace(DIRECTORY_SEPARATOR, '/', DIR_BASE_CORE . '/attributes/address/form.php'), str_replace(DIRECTORY_SEPARATOR, '/', $av->getViewTemplate()));
+        $this->assertEquals(DIR_BASE_CORE . '/attributes/address/form.php', $av->getViewTemplate());
     }
 
 
