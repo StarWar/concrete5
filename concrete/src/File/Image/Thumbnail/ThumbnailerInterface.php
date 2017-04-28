@@ -3,6 +3,7 @@ namespace Concrete\Core\File\Image\Thumbnail;
 
 use Concrete\Core\File\StorageLocation\StorageLocationInterface;
 use Imagine\Image\ImagineInterface;
+use stdClass;
 
 /**
  * Interface ThumbnailerInterface
@@ -10,6 +11,27 @@ use Imagine\Image\ImagineInterface;
  */
 interface ThumbnailerInterface
 {
+    /**
+     * Thumbnail format: JPEG.
+     *
+     * @var string
+     */
+    const THUMBNAILFORMAT_JPEG = 'jpeg';
+
+    /**
+     * Thumbnail format: PNG.
+     *
+     * @var string
+     */
+    const THUMBNAILFORMAT_PNG = 'png';
+
+    /**
+     * Thumbnail format: determine automatically.
+     *
+     * @var string
+     */
+    const THUMBNAILFORMAT_AUTO = 'auto';
+
     /**
      * Get the storage location to use.
      *
@@ -63,7 +85,7 @@ interface ThumbnailerInterface
     /**
      * Set the format of the generated thumbnails.
      *
-     * @param string $thumbnailsFormat valid values: 'auto', 'jpeg', 'png'
+     * @param string $thumbnailsFormat valid values: one of the ThumbnailerInterface::THUMBNAILFORMAT_... constants
      *
      * @return static
      */
@@ -72,7 +94,7 @@ interface ThumbnailerInterface
     /**
      * Get the format of the generated thumbnails.
      *
-     * @return string one of 'auto', 'jpeg', 'png'
+     * @return string one of the ThumbnailerInterface::THUMBNAILFORMAT_... constants
      */
     public function getThumbnailsFormat();
 
@@ -99,4 +121,20 @@ interface ThumbnailerInterface
      * @return stdClass Object that has the following properties: src (the public URL to the file), width (null if unable to determine it), height (null if unable to determine it)
      */
     public function getThumbnail($obj, $maxWidth, $maxHeight, $crop = false);
+
+    /**
+     * Returns the thumbnail format given a file name.
+     *
+     * @param string $filename
+     *
+     * @return string one of the ThumbnailerInterface::THUMBNAILFORMAT_... constants (except ThumbnailerInterface::THUMBNAILFORMAT_AUTO)
+     */
+    public function getThumbnailFormatFromFilename($filename);
+
+    /**
+     * Returns the thumbnail file extension given its format.
+     *
+     * @param string $format one of the ThumbnailerInterface::THUMBNAILFORMAT_... constants (except ThumbnailerInterface::THUMBNAILFORMAT_AUTO)
+     */
+    public function getThumbnailExtenstionFromFormat($format);
 }

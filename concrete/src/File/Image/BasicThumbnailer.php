@@ -9,7 +9,6 @@ use Concrete\Core\File\Image\Thumbnail\ThumbnailerInterface;
 use Concrete\Core\File\Image\Thumbnail\Type\CustomThumbnail;
 use Concrete\Core\File\StorageLocation\Configuration\DefaultConfiguration;
 use Concrete\Core\File\StorageLocation\StorageLocationInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Image;
@@ -147,10 +146,16 @@ class BasicThumbnailer implements ThumbnailerInterface, ApplicationAwareInterfac
     public function setThumbnailsFormat($thumbnailsFormat)
     {
         $thumbnailsFormat = $thumbnailsFormat ? strtolower(trim((string) $thumbnailsFormat)) : '';
-        if ($thumbnailsFormat === 'jpg') {
-            $thumbnailsFormat = 'jpeg';
+        switch ($thumbnailsFormat) {
+            case static::THUMBNAILFORMAT_JPEG:
+            case static::THUMBNAILFORMAT_PNG:
+            case static::THUMBNAILFORMAT_AUTO:
+                $this->thumbnailsFormat = $thumbnailsFormat;
+                break;
+            default:
+                $this->thumbnailsFormat = static::THUMBNAILFORMAT_JPEG;
+                break;
         }
-        $this->thumbnailsFormat = in_array($thumbnailsFormat, ['jpeg', 'png', 'auto']) ? $thumbnailsFormat : 'jpeg';
 
         return $this;
     }
@@ -176,14 +181,7 @@ class BasicThumbnailer implements ThumbnailerInterface, ApplicationAwareInterfac
      */
     public function create($mixed, $savePath, $width, $height, $fit = false)
     {
-        $format = $this->getThumbnailsFormat();
-        if ($format === 'auto') {
-            if (preg_match('/\.jpe?g($|\?)/i', $savePath)) {
-                $format = 'jpeg';
-            } else {
-                $format = 'png';
-            }
-        }
+        $format = $this->getThumbnailFormatFromFilename($savePath);
         $thumbnailOptions = [
             'jpeg_quality' => $this->getJpegCompression(),
             'png_compression_level' => $this->getPngCompression(),
@@ -246,28 +244,10 @@ class BasicThumbnailer implements ThumbnailerInterface, ApplicationAwareInterfac
         }
 
         $thumbnailsFormat = $this->getThumbnailsFormat();
-        switch ($thumbnailsFormat) {
-            case 'jpeg':
-                $extension = 'jpg';
-                break;
-            case 'png':
-                $extension = 'png';
-                break;
-            case 'auto':
-                switch (strtolower($extension)) {
-                    case 'jpeg':
-                    case 'jpg':
-                    case 'pjpeg':
-                        $extension = 'jpg';
-                        $thumbnailsFormat = 'jpeg';
-                        break;
-                    default:
-                        $extension = 'png';
-                        $thumbnailsFormat = 'png';
-                        break;
-                }
-                break;
+        if ($thumbnailsFormat === static::THUMBNAILFORMAT_AUTO) {
+            $thumbnailsFormat = $this->getThumbnailFormatFromFilename("file.{$extension}");
         }
+        $extension = $this->getThumbnailExtenstionFromFormat($thumbnailsFormat);
         $filename = '';
         if ($baseFilename !== '') {
             $filename = $baseFilename . '.' . $extension;
@@ -336,6 +316,41 @@ class BasicThumbnailer implements ThumbnailerInterface, ApplicationAwareInterfac
             return $html;
         } else {
             echo $html;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see ThumbnailerInterface::getThumbnailFormatFromFilename()
+     */
+    public function getThumbnailFormatFromFilename($filename)
+    {
+        $format = $this->getThumbnailsFormat();
+        if ($format === static::THUMBNAILFORMAT_AUTO) {
+            if (is_string($filename) && preg_match('/\.jpe?g($|\?)/i', $filename)) {
+                $format = static::THUMBNAILFORMAT_JPEG;
+            } else {
+                $format = static::THUMBNAILFORMAT_PNG;
+            }
+        }
+
+        return $format;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @see ThumbnailerInterface::getThumbnailExtenstionFromFormat()
+     */
+    public function getThumbnailExtenstionFromFormat($format)
+    {
+        switch ($format) {
+            case static::THUMBNAILFORMAT_JPEG:
+                return 'jpg';
+            case static::THUMBNAILFORMAT_PNG:
+            default:
+                return 'png';
         }
     }
 }
