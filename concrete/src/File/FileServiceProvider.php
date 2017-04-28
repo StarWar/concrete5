@@ -1,6 +1,8 @@
 <?php
 namespace Concrete\Core\File;
 
+use Concrete\Core\File\Image\BasicThumbnailer;
+use Concrete\Core\File\Image\Thumbnail\ThumbnailerInterface;
 use Concrete\Core\File\StorageLocation\StorageLocation;
 use Concrete\Core\File\StorageLocation\StorageLocationInterface;
 use Concrete\Core\Foundation\Service\Provider as ServiceProvider;
@@ -9,13 +11,13 @@ class FileServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $singletons = array(
+        $singletons = [
             'helper/file' => '\Concrete\Core\File\Service\File',
             'helper/concrete/file' => '\Concrete\Core\File\Service\Application',
             'helper/image' => '\Concrete\Core\File\Image\BasicThumbnailer',
             'helper/mime' => '\Concrete\Core\File\Service\Mime',
             'helper/zip' => '\Concrete\Core\File\Service\Zip',
-        );
+        ];
 
         foreach ($singletons as $key => $value) {
             $this->app->singleton($key, $value);
@@ -25,8 +27,10 @@ class FileServiceProvider extends ServiceProvider
         $this->app->bind('image/gd', '\Imagine\Gd\Imagine');
         $this->app->bind('image/thumbnailer', '\Concrete\Core\File\Image\BasicThumbnailer');
 
-        $this->app->bind(StorageLocationInterface::class, function($app) {
+        $this->app->bind(StorageLocationInterface::class, function ($app) {
             return StorageLocation::getDefault();
         });
+
+        $this->app->alias(BasicThumbnailer::class, ThumbnailerInterface::class);
     }
 }
