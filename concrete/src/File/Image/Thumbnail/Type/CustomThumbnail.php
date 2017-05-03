@@ -1,18 +1,17 @@
 <?php
-
 namespace Concrete\Core\File\Image\Thumbnail\Type;
 
 use Concrete\Core\Entity\File\Version as FileVersion;
-use Concrete\Core\File\Image\Thumbnail\Type\Version as ThumbnailVersion;
 use Concrete\Core\File\Image\Thumbnail\Type\Type as ThumbnailType;
+use Concrete\Core\File\Image\Thumbnail\Type\Version as ThumbnailVersion;
 
 class CustomThumbnail extends ThumbnailVersion
 {
-
     protected $path;
 
     /**
      * CustomThumbnail constructor.
+     *
      * @param int $width
      * @param int $height
      * @param string $path The full path to the file (whether it exists or not)
@@ -32,5 +31,4 @@ class CustomThumbnail extends ThumbnailVersion
     {
         return $this->path;
     }
-
 }

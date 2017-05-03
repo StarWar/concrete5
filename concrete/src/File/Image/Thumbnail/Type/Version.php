@@ -1,7 +1,6 @@
 <?php
 namespace Concrete\Core\File\Image\Thumbnail\Type;
 
-use Concrete\Core\File\Image\Thumbnail\Path\Resolver;
 use Concrete\Core\Entity\File\Version as FileVersion;
 use Concrete\Core\File\Image\Thumbnail\Type\Type as ThumbnailType;
 use Core;

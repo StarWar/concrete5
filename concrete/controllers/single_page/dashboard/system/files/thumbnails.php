@@ -4,7 +4,6 @@ namespace Concrete\Controller\SinglePage\Dashboard\System\Files;
 use Concrete\Core\File\Image\Thumbnail\Type\Type;
 use Concrete\Core\Page\Controller\DashboardPageController;
 use Loader;
-use Request;
 
 class Thumbnails extends DashboardPageController
 {
@@ -31,13 +30,13 @@ class Thumbnails extends DashboardPageController
     {
         $sizingModes = [
             Type::RESIZE_PROPORTIONAL => t('Resize Proportionally'),
-            Type::RESIZE_EXACT => t('Resize and Crop to the Exact Size')
+            Type::RESIZE_EXACT => t('Resize and Crop to the Exact Size'),
         ];
         $this->set('sizingModes', $sizingModes);
 
         $sizingModeHelp = [
             Type::RESIZE_PROPORTIONAL => t("The original image will be scaled down so it is fully contained within the thumbnail dimensions. The specified width and height will be considered maximum limits. Unless the given dimensions are equal to the original image's aspect ratio, one dimension in the resulting thumbnail will be smaller than the given limit."),
-            Type::RESIZE_EXACT => t("The thumbnail will be scaled so that its smallest side will equal the length of the corresponding side in the original image. Any excess outside of the scaled thumbnail's area will be cropped, and the returned thumbnail will have the exact width and height specified. Both width and height must be specified.")
+            Type::RESIZE_EXACT => t("The thumbnail will be scaled so that its smallest side will equal the length of the corresponding side in the original image. Any excess outside of the scaled thumbnail's area will be cropped, and the returned thumbnail will have the exact width and height specified. Both width and height must be specified."),
         ];
         $this->set('sizingModeHelp', $sizingModeHelp);
 
@@ -187,7 +186,7 @@ class Thumbnails extends DashboardPageController
             if ($width > 0) {
                 $type->setWidth($width);
             }
-            
+
             $type->setName($request->request->get('ftTypeName'));
             $type->setHandle($request->request->get('ftTypeHandle'));
             $type->setSizingMode($request->request->get('ftTypeSizingMode'));
